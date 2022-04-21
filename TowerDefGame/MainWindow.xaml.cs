@@ -25,6 +25,16 @@ namespace TowerDefGame
         ImageBrush towerBrush3 = new ImageBrush();
         ImageBrush towerBrush4 = new ImageBrush();
 
+        ImageBrush enemyBrush = new ImageBrush();
+        ImageBrush enemyBrush2 = new ImageBrush();
+        ImageBrush enemyBrush3 = new ImageBrush();
+        ImageBrush enemyBrush4 = new ImageBrush();
+
+        ImageBrush templeBrush = new ImageBrush();
+        ImageBrush templeBrush2 = new ImageBrush();
+
+        Random rand = new Random();
+
         public int balance;
         public int health;
         public int round;
@@ -34,6 +44,8 @@ namespace TowerDefGame
 
         public int mousex;
         public int mousey;
+
+        public bool notPaused = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -50,12 +62,14 @@ namespace TowerDefGame
         private void temple1Select_Click(object sender, RoutedEventArgs e)
         {
             temple = 1;
+            //templeBrush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Temple_1.png"));
             gameInitialize();
         }
 
         private void temple2Select_Click(object sender, RoutedEventArgs e)
         {
             temple = 2;
+            //templeBrush2.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Temple_2.png"));
             gameInitialize();
         }
         private void gameInitialize()
@@ -213,6 +227,21 @@ namespace TowerDefGame
             isBuying = true;
             buyingTypeOf = 4;
             test.Fill = Brushes.Red;
+        }
+
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            notPaused = true;
+            while (notPaused)
+            {
+
+            }
+            
+        }
+
+        private void gameEngine()
+        {
+
         }
     }
     public class Enemy
