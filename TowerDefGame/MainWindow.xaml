@@ -9,11 +9,12 @@
     <Canvas x:Name="gameCanvas" Width="800" Height="785" HorizontalAlignment="Left" VerticalAlignment="Top" Background="LightGreen" Tag="gameCanvas" MouseLeftButtonUp="gameCanvas_MouseLeftButtonUp" MouseMove="gameCanvas_MouseMove">
         <!--Below is the menu for the starting screen where you select a temple type-->
         <Rectangle x:Name="startScreenOverlay" Height="800" Width="1200" Fill="Gray" Tag="overlay" Visibility="Hidden" Canvas.ZIndex="3"/>
-        <Button x:Name="temple1Select" Height="100" Width="100" Background="Wheat" Tag="buttonTemple1" Visibility="Hidden" Content="Option 1" Click="temple1Select_Click" Canvas.Left="300" Canvas.Top="300" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.ZIndex="3"/>
-        <Button x:Name="temple2Select" Height="100" Width="100" Background="Wheat" Tag="buttonTemple2" Visibility="Hidden" Content="Option 2" Click="temple2Select_Click" Canvas.Left="801" Canvas.Top="300" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.ZIndex="3"/>
+        <Button x:Name="temple1Select" Height="100" Width="100" Background="Wheat" Tag="buttonTemple1" Visibility="Hidden" Click="temple1Select_Click" Canvas.Left="300" Canvas.Top="300" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.ZIndex="3"/>
+        <Button x:Name="temple2Select" Height="100" Width="100" Background="Wheat" Tag="buttonTemple2" Visibility="Hidden" Click="temple2Select_Click" Canvas.Left="801" Canvas.Top="300" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.ZIndex="3"/>
         <TextBlock x:Name="startText" Text="Select Your Starting Temple" Foreground="Wheat" Visibility="Hidden" Height="23" Width="152" VerticalAlignment="Top" HorizontalAlignment="Left" Canvas.ZIndex="3" Background="Gray" Canvas.Left="524" Canvas.Top="179"/>
         <!--Sets up the area behind the overlay-->
         <Rectangle x:Name="shop" Width="400" Height="785" HorizontalAlignment="Center"  Fill="Gray" Tag="shop" Canvas.Left="800" VerticalAlignment="Top" Canvas.ZIndex="2"/>
+        <Rectangle x:Name="track" Width="800" Height="785" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="LightGreen" Visibility="Hidden" Tag="track" Canvas.ZIndex="2"/>
         <TextBlock x:Name="healthText" Text="Health: 0" Foreground="Wheat" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.ZIndex="2" Canvas.Left="918" Canvas.Top="15" Tag="healthText"/>
         <TextBlock x:Name="roundText" Text="Round: 0" Foreground="Wheat" VerticalAlignment="Top" HorizontalAlignment="Left" Canvas.ZIndex="2" Canvas.Left="827" Canvas.Top="15" Tag="roundText"/>
         <TextBlock x:Name="ballanceText" Text="Ballance: 0" Foreground="Wheat" VerticalAlignment="Top" HorizontalAlignment="Center" Canvas.ZIndex="2" Canvas.Left="1000" Canvas.Top="15" Tag="ballanceText"/>
