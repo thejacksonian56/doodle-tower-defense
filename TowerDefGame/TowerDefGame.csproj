@@ -12,14 +12,19 @@
     <None Remove="Images\Enemy_2.png" />
     <None Remove="Images\Enemy_3.png" />
     <None Remove="Images\Enemy_4.png" />
+    <None Remove="Images\Temple_1.png" />
+    <None Remove="Images\Temple_2.png" />
     <None Remove="Images\Temple_Base.png" />
     <None Remove="Images\Tower_1.png" />
     <None Remove="Images\Tower_2.png" />
     <None Remove="Images\Tower_3.png" />
     <None Remove="Images\Tower_4.png" />
+    <None Remove="Images\Track.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Temple_1.png" />
+    <Resource Include="Images\Temple_2.png" />
     <Resource Include="Images\Tower_4.png" />
   </ItemGroup>
 
@@ -32,6 +37,7 @@
     <Resource Include="Images\Tower_1.png" />
     <Resource Include="Images\Tower_2.png" />
     <Resource Include="Images\Tower_3.png" />
+    <Resource Include="Images\Track.png" />
   </ItemGroup>
 
 </Project>

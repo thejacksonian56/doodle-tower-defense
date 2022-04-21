@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace TowerDefGame
 {
@@ -32,8 +33,11 @@ namespace TowerDefGame
 
         ImageBrush templeBrush = new ImageBrush();
         ImageBrush templeBrush2 = new ImageBrush();
+        ImageBrush trackBrush = new ImageBrush();
 
         Random rand = new Random();
+
+        DispatcherTimer timer = new DispatcherTimer();
 
         public int balance;
         public int health;
@@ -46,6 +50,9 @@ namespace TowerDefGame
         public int mousey;
 
         public bool notPaused = false;
+
+        int enemyCounter;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -56,24 +63,33 @@ namespace TowerDefGame
             temple2Select.Visibility = Visibility.Visible;
             startText.Visibility = Visibility.Visible;
 
+            templeBrush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Temple_1.png"));
+            templeBrush2.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Temple_2.png"));
+            trackBrush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Track.png"));
+
+            temple1Select.Background = templeBrush;
+            temple2Select.Background = templeBrush2;
+
 
         }
 
         private void temple1Select_Click(object sender, RoutedEventArgs e)
         {
             temple = 1;
-            //templeBrush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Temple_1.png"));
+            templeRec.Fill = templeBrush;
             gameInitialize();
         }
 
         private void temple2Select_Click(object sender, RoutedEventArgs e)
         {
             temple = 2;
-            //templeBrush2.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Temple_2.png"));
+            templeRec.Fill = templeBrush2;
             gameInitialize();
         }
         private void gameInitialize()
         {
+            track.Visibility = Visibility.Visible;
+            track.Fill = trackBrush;
             startScreenOverlay.Visibility = Visibility.Collapsed;
             temple1Select.Visibility = Visibility.Collapsed;
             temple2Select.Visibility = Visibility.Collapsed;
@@ -128,6 +144,7 @@ namespace TowerDefGame
                         };
                         Canvas.SetLeft(tower1, mousex);
                         Canvas.SetTop(tower1, mousey);
+                        
                         gameCanvas.Children.Add(tower1);
                         break;
                     case 2:
@@ -234,14 +251,17 @@ namespace TowerDefGame
             notPaused = true;
             while (notPaused)
             {
-
+                timer.Tick += gameEngine;
+                timer.Interval = TimeSpan.FromMilliseconds(20);
+                timer.Start();
             }
             
         }
 
-        private void gameEngine()
+        private void gameEngine(object? sender, EventArgs e)
         {
 
+            
         }
     }
     public class Enemy
