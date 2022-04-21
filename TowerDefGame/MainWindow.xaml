@@ -1,0 +1,26 @@
+﻿<Window x:Class="TowerDefGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TowerDefGame"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1200">
+    <Canvas x:Name="gameCanvas" Width="800" Height="785" HorizontalAlignment="Left" VerticalAlignment="Top" Background="LightGreen" Tag="gameCanvas" MouseLeftButtonUp="gameCanvas_MouseLeftButtonUp" MouseMove="gameCanvas_MouseMove">
+        <!--Below is the menu for the starting screen where you select a temple type-->
+        <Rectangle x:Name="startScreenOverlay" Height="800" Width="1200" Fill="Gray" Tag="overlay" Visibility="Hidden" Canvas.ZIndex="3"/>
+        <Button x:Name="temple1Select" Height="100" Width="100" Background="Wheat" Tag="buttonTemple1" Visibility="Hidden" Content="Option 1" Click="temple1Select_Click" Canvas.Left="300" Canvas.Top="300" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.ZIndex="3"/>
+        <Button x:Name="temple2Select" Height="100" Width="100" Background="Wheat" Tag="buttonTemple2" Visibility="Hidden" Content="Option 2" Click="temple2Select_Click" Canvas.Left="801" Canvas.Top="300" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.ZIndex="3"/>
+        <TextBlock x:Name="startText" Text="Select Your Starting Temple" Foreground="Wheat" Visibility="Hidden" Height="23" Width="152" VerticalAlignment="Top" HorizontalAlignment="Left" Canvas.ZIndex="3" Background="Gray" Canvas.Left="524" Canvas.Top="179"/>
+        <!--Sets up the area behind the overlay-->
+        <Rectangle x:Name="shop" Width="400" Height="785" HorizontalAlignment="Center"  Fill="Gray" Tag="shop" Canvas.Left="800" VerticalAlignment="Top" Canvas.ZIndex="2"/>
+        <TextBlock x:Name="healthText" Text="Health: 0" Foreground="Wheat" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.ZIndex="2" Canvas.Left="918" Canvas.Top="15" Tag="healthText"/>
+        <TextBlock x:Name="roundText" Text="Round: 0" Foreground="Wheat" VerticalAlignment="Top" HorizontalAlignment="Left" Canvas.ZIndex="2" Canvas.Left="827" Canvas.Top="15" Tag="roundText"/>
+        <TextBlock x:Name="ballanceText" Text="Ballance: 0" Foreground="Wheat" VerticalAlignment="Top" HorizontalAlignment="Center" Canvas.ZIndex="2" Canvas.Left="1000" Canvas.Top="15" Tag="ballanceText"/>
+        <Button x:Name="tower1Buy" Content="150" Width="100" Height="100" Background="Red" Tag="tower1Buy" Canvas.ZIndex="2" Foreground="Beige" Canvas.Left="850" Canvas.Top="90" Click="tower1Buy_Click"/>
+        <Button x:Name="tower2Buy" Content="300" Width="100" Height="100" Background="Red" Tag="tower2Buy" Canvas.ZIndex="2" Foreground="Beige" Canvas.Left="1000" Canvas.Top="90" Click="tower2Buy_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="tower3Buy" Content="500" Width="100" Height="100" Background="Red" Tag="tower3Buy" Canvas.ZIndex="2" Foreground="Beige" Canvas.Left="850" Canvas.Top="217" Click="tower3Buy_Click"/>
+        <Button x:Name="tower4Buy" Content="800" Width="100" Height="99" Background="Red" Tag="tower4Buy" Canvas.ZIndex="2" Foreground="Beige" Canvas.Left="1000" Canvas.Top="218" Click="tower4Buy_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Rectangle x:Name="test" Fill="Black" Width="50" Height="50" Tag="textRec" Canvas.ZIndex="2" HorizontalAlignment="Left" Canvas.Left="1150" VerticalAlignment="Center" />
+    </Canvas>
+</Window>

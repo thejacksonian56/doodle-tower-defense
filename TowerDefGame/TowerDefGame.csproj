@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Enemy_1.png" />
+    <None Remove="Images\Enemy_2.png" />
+    <None Remove="Images\Enemy_3.png" />
+    <None Remove="Images\Enemy_4.png" />
+    <None Remove="Images\Temple_Base.png" />
+    <None Remove="Images\Tower_1.png" />
+    <None Remove="Images\Tower_2.png" />
+    <None Remove="Images\Tower_3.png" />
+    <None Remove="Images\Tower_4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Tower_4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Enemy_1.png" />
+    <Resource Include="Images\Enemy_2.png" />
+    <Resource Include="Images\Enemy_3.png" />
+    <Resource Include="Images\Enemy_4.png" />
+    <Resource Include="Images\Temple_Base.png" />
+    <Resource Include="Images\Tower_1.png" />
+    <Resource Include="Images\Tower_2.png" />
+    <Resource Include="Images\Tower_3.png" />
+  </ItemGroup>
+
+</Project>
