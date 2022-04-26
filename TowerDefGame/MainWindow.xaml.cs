@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace TowerDefGame
 {
@@ -51,7 +52,8 @@ namespace TowerDefGame
 
         public bool notPaused = false;
 
-        int enemyCounter;
+        int enemysLeft;
+        public bool enemyTimerOver = true;
 
         public MainWindow()
         {
@@ -142,6 +144,7 @@ namespace TowerDefGame
                             Tag = "tower1",
                             Fill = towerBrush
                         };
+                        Canvas.SetZIndex(tower1, 2);
                         Canvas.SetLeft(tower1, mousex);
                         Canvas.SetTop(tower1, mousey);
                         
@@ -164,6 +167,7 @@ namespace TowerDefGame
                         };
                         Canvas.SetLeft(tower2, mousex);
                         Canvas.SetTop(tower2, mousey);
+                        Canvas.SetZIndex(tower2, 2);
                         gameCanvas.Children.Add(tower2);
                         break;
                     case 3:
@@ -183,6 +187,7 @@ namespace TowerDefGame
                         };
                         Canvas.SetLeft(tower3, mousex);
                         Canvas.SetTop(tower3, mousey);
+                        Canvas.SetZIndex(tower3, 2);
                         gameCanvas.Children.Add(tower3);
                         break;
                     case 4:
@@ -202,6 +207,7 @@ namespace TowerDefGame
                         };
                         Canvas.SetLeft(tower4, mousex);
                         Canvas.SetTop(tower4, mousey);
+                        Canvas.SetZIndex(tower4, 2);
                         gameCanvas.Children.Add(tower4);
                         break;
                 }
@@ -254,14 +260,56 @@ namespace TowerDefGame
                 timer.Tick += gameEngine;
                 timer.Interval = TimeSpan.FromMilliseconds(20);
                 timer.Start();
+                enemysLeft = 20;
             }
             
         }
 
         private void gameEngine(object? sender, EventArgs e)
         {
+            makeEnemys();
+            foreach (Rectangle x in gameCanvas.Children)
+            {
+                switch (x.Tag)
+                {
+                    case "enemyDown":
+                        Canvas.SetTop(x, (Canvas.GetTop(x) + 20));
+                        break;
 
+                    case "enemyUp":
+                        Canvas.SetTop(x, (Canvas.GetTop(x) - 20));
+                        break;
+
+                    case "enemyLeft":
+                        Canvas.SetLeft(x, (Canvas.GetLeft(x) - 20));
+                        break;
+
+                    case "enemyRight":
+                        Canvas.SetLeft(x, (Canvas.GetLeft(x) + 20));
+                        break;
+                }
+            }
             
+        }
+        
+        private void makeEnemys()
+        {
+            if (enemysLeft > 0 && enemyTimerOver == true)
+            {
+                Rectangle baddy = new Rectangle()
+                {
+                    Width = 25,
+                    Height = 25,
+                    Tag = "enemyDown",
+                    Fill = new SolidColorBrush(Colors.Black)
+                };
+                Canvas.SetLeft(baddy, 90);
+                gameCanvas.Children.Add(baddy);
+            }
+            enemysLeft--;
+            enemyTimerOver = false;
+            Thread.Sleep(1000);
+            enemyTimerOver = true;
         }
     }
     public class Enemy
