@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TowerDefGame"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
-    <Canvas x:Name="gameCanvas" Width="800" Height="785" HorizontalAlignment="Left" VerticalAlignment="Top" Background="LightGreen" Tag="gameCanvas" MouseLeftButtonUp="gameCanvas_MouseLeftButtonUp" MouseMove="gameCanvas_MouseMove">
+    <Canvas x:Name="gameCanvas" Width="800" Height="785" HorizontalAlignment="Left" VerticalAlignment="Top" Background="LightGreen" Tag="gameCanvas" MouseLeftButtonUp="gameCanvas_MouseLeftButtonUp" MouseMove="gameCanvas_MouseMove" KeyDown="gameCanvas_KeyDown">
         <!--Below is the menu for the starting screen where you select a temple type-->
         <Rectangle x:Name="startScreenOverlay" Height="800" Width="1200" Fill="Gray" Tag="overlay" Visibility="Hidden" Canvas.ZIndex="3"/>
         <Button x:Name="temple1Select" Height="100" Width="100" Background="Wheat" Tag="buttonTemple1" Visibility="Hidden" Click="temple1Select_Click" Canvas.Left="300" Canvas.Top="300" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.ZIndex="3"/>
@@ -28,27 +28,27 @@
         <Rectangle x:Name="templeRec" Fill="Black" Width="200" Height="200" Tag="temple" Canvas.ZIndex="2" Canvas.Left="300" Canvas.Top="300" />
 
         <Rectangle x:Name="track1" Fill="Gray" Width="50" Height="120" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="71" VerticalAlignment="Top"/>
-        <Rectangle x:Name="turn1" Fill="Black" Width="50" Height="50" Tag="turnR" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="71" VerticalAlignment="Top" Canvas.Top="120"/>
+        <Rectangle x:Name="turn1" Fill="Black" Width="50" Height="15" Tag="turnR" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="71" VerticalAlignment="Top" Canvas.Top="155"/>
         <Rectangle x:Name="track2" Fill="Gray" Width="550" Height="50" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="121" VerticalAlignment="Center" Canvas.Top="120"/>
-        <Rectangle x:Name="turn2" Fill="Black" Width="50" Height="50" Tag="turnD" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="671" VerticalAlignment="Center" Canvas.Top="120"/>
+        <Rectangle x:Name="turn2" Fill="Black" Width="15" Height="50" Tag="turnD" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="706" VerticalAlignment="Center" Canvas.Top="120"/>
         <Rectangle x:Name="track3" Fill="Gray" Width="50" Height="50" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="671" VerticalAlignment="Top" Canvas.Top="170"/>
-        <Rectangle x:Name="turn3" Fill="Black" Width="50" Height="50" Tag="turnL" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="671" VerticalAlignment="Top" Canvas.Top="220"/>
+        <Rectangle x:Name="turn3" Fill="Black" Width="50" Height="15" Tag="turnL" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="671" VerticalAlignment="Top" Canvas.Top="255"/>
         <Rectangle x:Name="track4" Fill="Gray" Width="550" Height="50" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="121" VerticalAlignment="Center" Canvas.Top="220"/>
-        <Rectangle x:Name="turn4" Fill="Black" Width="50" Height="50" Tag="turnD" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="71" VerticalAlignment="Center" Canvas.Top="220"/>
+        <Rectangle x:Name="turn4" Fill="Black" Width="15" Height="50" Tag="turnD" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="71" VerticalAlignment="Center" Canvas.Top="220"/>
         <Rectangle x:Name="track5" Fill="Gray" Width="50" Height="400" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="71" VerticalAlignment="Center" Canvas.Top="270"/>
-        <Rectangle x:Name="turn5" Fill="Black" Width="50" Height="50" Tag="turnR" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="71" VerticalAlignment="Top" Canvas.Top="670"/>
+        <Rectangle x:Name="turn5" Fill="Black" Width="50" Height="15" Tag="turnR" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="71" VerticalAlignment="Top" Canvas.Top="705"/>
         <Rectangle x:Name="track6" Fill="Gray" Width="550" Height="50" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="121" VerticalAlignment="Top" Canvas.Top="670"/>
-        <Rectangle x:Name="turn6" Fill="Black" Width="50" Height="50" Tag="turnU" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="671" VerticalAlignment="Center" Canvas.Top="670"/>
+        <Rectangle x:Name="turn6" Fill="Black" Width="15" Height="50" Tag="turnU" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="706" VerticalAlignment="Center" Canvas.Top="670"/>
         <Rectangle x:Name="track7" Fill="Gray" Width="50" Height="320" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="671" VerticalAlignment="Top" Canvas.Top="350"/>
-        <Rectangle x:Name="turn7" Fill="Black" Width="50" Height="50" Tag="turnL" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="671" VerticalAlignment="Top" Canvas.Top="300"/>
+        <Rectangle x:Name="turn7" Fill="Black" Width="50" Height="15" Tag="turnL" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="671" VerticalAlignment="Top" Canvas.Top="300"/>
         <Rectangle x:Name="track8" Fill="Gray" Width="70" Height="50" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="601" VerticalAlignment="Center" Canvas.Top="300"/>
-        <Rectangle x:Name="turn8" Fill="Black" Width="50" Height="50" Tag="turnD" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="551" VerticalAlignment="Center" Canvas.Top="300"/>
+        <Rectangle x:Name="turn8" Fill="Black" Width="15" Height="50" Tag="turnD" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="551" VerticalAlignment="Center" Canvas.Top="300"/>
         <Rectangle x:Name="track9" Fill="Gray" Width="50" Height="200" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="551" VerticalAlignment="Top" Canvas.Top="350"/>
-        <Rectangle x:Name="turn9" Fill="Black" Width="50" Height="50" Tag="turnL" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="551" VerticalAlignment="Center" Canvas.Top="550"/>
+        <Rectangle x:Name="turn9" Fill="Black" Width="50" Height="15" Tag="turnL" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="551" VerticalAlignment="Top" Canvas.Top="585"/>
         <Rectangle x:Name="track10" Fill="Gray" Width="300" Height="50" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="251" VerticalAlignment="Center" Canvas.Top="550"/>
-        <Rectangle x:Name="turn10" Fill="Black" Width="50" Height="50" Tag="turnU" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="201" VerticalAlignment="Center" Canvas.Top="550"/>
+        <Rectangle x:Name="turn10" Fill="Black" Width="15" Height="50" Tag="turnU" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="201" VerticalAlignment="Center" Canvas.Top="550"/>
         <Rectangle x:Name="track11" Fill="Gray" Width="50" Height="100" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="201" VerticalAlignment="Top" Canvas.Top="450"/>
-        <Rectangle x:Name="turn11" Fill="Black" Width="50" Height="50" Tag="turnR" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="201" VerticalAlignment="Top" Canvas.Top="400"/>
+        <Rectangle x:Name="turn11" Fill="Black" Width="50" Height="15" Tag="turnR" Canvas.ZIndex="1" HorizontalAlignment="Center" Canvas.Left="201" VerticalAlignment="Top" Canvas.Top="400"/>
         <Rectangle x:Name="track12" Fill="Gray" Width="145" Height="50" Tag="track" Canvas.ZIndex="1" HorizontalAlignment="Left" Canvas.Left="251" VerticalAlignment="Center" Canvas.Top="400"/>
     </Canvas>
 </Window>
