@@ -39,6 +39,7 @@ namespace TowerDefGame
         Random rand = new Random();
 
         DispatcherTimer timer = new DispatcherTimer();
+        DispatcherTimer rateTimer = new DispatcherTimer();
 
         public int balance;
         public int health;
@@ -53,7 +54,7 @@ namespace TowerDefGame
         public bool notPaused = false;
 
         int enemysLeft;
-        public bool enemyTimerOver = true;
+        public int timerCount = 10;
 
         public MainWindow()
         {
@@ -73,6 +74,7 @@ namespace TowerDefGame
             temple2Select.Background = templeBrush2;
 
 
+            
         }
 
         private void temple1Select_Click(object sender, RoutedEventArgs e)
@@ -90,7 +92,7 @@ namespace TowerDefGame
         }
         private void gameInitialize()
         {
-            track.Visibility = Visibility.Visible;
+            //track.Visibility = Visibility.Visible;
             track.Fill = trackBrush;
             startScreenOverlay.Visibility = Visibility.Collapsed;
             temple1Select.Visibility = Visibility.Collapsed;
@@ -254,47 +256,167 @@ namespace TowerDefGame
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            notPaused = true;
-            while (notPaused)
-            {
                 timer.Tick += gameEngine;
                 timer.Interval = TimeSpan.FromMilliseconds(20);
                 timer.Start();
                 enemysLeft = 20;
-            }
-            
         }
-
-        private void gameEngine(object? sender, EventArgs e)
+        private void gameEngine(object sender, EventArgs e)
         {
             makeEnemys();
-            foreach (Rectangle x in gameCanvas.Children)
+            timerCount++;
+            foreach (var x in gameCanvas.Children.OfType<Rectangle>())
             {
                 switch (x.Tag)
                 {
                     case "enemyDown":
-                        Canvas.SetTop(x, (Canvas.GetTop(x) + 20));
+                        Canvas.SetTop(x, Canvas.GetTop(x) + 10);
+                        Rect enemyD = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "turnR")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if(enemyD.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyRight";
+                                }
+                            }
+                            else if ((string)y.Tag == "turnL")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyD.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyLeft";
+                                }
+                            }
+                            else if ((string)y.Tag == "turnU")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyD.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyUp";
+                                }
+                            }
+                        }
                         break;
 
                     case "enemyUp":
-                        Canvas.SetTop(x, (Canvas.GetTop(x) - 20));
+                        Canvas.SetTop(x, Canvas.GetTop(x) - 10);
+                        Rect enemyU = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "turnR")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyU.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyRight";
+                                }
+                            }
+                            else if ((string)y.Tag == "turnL")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyU.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyLeft";
+                                }
+                            }
+                            else if ((string)y.Tag == "turnD")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyU.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyDown";
+                                }
+                            }
+                        }
                         break;
 
                     case "enemyLeft":
-                        Canvas.SetLeft(x, (Canvas.GetLeft(x) - 20));
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 10);
+                        Rect enemyL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "turnR")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyL.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyRight";
+                                }
+                            }
+                            else if ((string)y.Tag == "turnD")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyL.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyDown";
+                                }
+                            }
+                            else if ((string)y.Tag == "turnU")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyL.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyUp";
+                                }
+                            }
+                        }
                         break;
 
                     case "enemyRight":
-                        Canvas.SetLeft(x, (Canvas.GetLeft(x) + 20));
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 10);
+                        Rect enemyR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "turnD")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyR.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyDown";
+                                }
+                            }
+                            else if ((string)y.Tag == "turnL")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyR.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyLeft";
+                                }
+                            }
+                            else if ((string)y.Tag == "turnU")
+                            {
+                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyR.IntersectsWith(turn))
+                                {
+                                    x.Tag = "enemyUp";
+                                }
+                            }
+
+                            else if ((string)y.Tag == "temple")
+                            {
+                                Rect templeRect = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (enemyR.IntersectsWith(templeRect))
+                                {
+                                    gameCanvas.Children.Remove(x);
+                                    health--;
+                                    healthText.Text = "Health: " + health;
+                                    return;
+                                }
+                            }
+                        }
                         break;
                 }
             }
+            //GC.Collect();
             
         }
         
         private void makeEnemys()
         {
-            if (enemysLeft > 0 && enemyTimerOver == true)
+            if (enemysLeft > 0 && timerCount == 10)
             {
                 Rectangle baddy = new Rectangle()
                 {
@@ -304,32 +426,18 @@ namespace TowerDefGame
                     Fill = new SolidColorBrush(Colors.Black)
                 };
                 Canvas.SetLeft(baddy, 90);
+                Canvas.SetTop(baddy, 0);
+                Canvas.SetZIndex(baddy, 2);
                 gameCanvas.Children.Add(baddy);
+
+                timerCount = 0;
+                enemysLeft--;
             }
-            enemysLeft--;
-            enemyTimerOver = false;
-            Thread.Sleep(1000);
-            enemyTimerOver = true;
         }
-    }
-    public class Enemy
-    {
-        public int health;
-        public int type;
-        public int reward;
-        public int speed;
-    }
-    public class tower
-    {
-        public int cost;
-        public int type;
-        public int attackDamage;
-        public int attackSpeed;
-    }
-    public class Round
-    {
-        public int roundNumber;
-        public int reward;
-        public float speedModifier;
+
+        private void gameCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
