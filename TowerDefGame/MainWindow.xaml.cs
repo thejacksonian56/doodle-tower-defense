@@ -95,7 +95,7 @@ namespace TowerDefGame
         }
         private void gameInitialize()
         {
-            //track.Visibility = Visibility.Visible;
+            track.Visibility = Visibility.Visible;
             track.Fill = trackBrush;
             startScreenOverlay.Visibility = Visibility.Collapsed;
             temple1Select.Visibility = Visibility.Collapsed;
@@ -438,7 +438,7 @@ namespace TowerDefGame
                 switch (x.Tag)
                 {
                     case "bulletL":
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 20);
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 30);
                         Rect bulletL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
@@ -457,7 +457,7 @@ namespace TowerDefGame
                         }
                         break;
                     case "bulletR":
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 20);
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 30);
                         Rect bulletR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
@@ -476,7 +476,7 @@ namespace TowerDefGame
                         }
                         break;
                     case "bulletU":
-                        Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+                        Canvas.SetTop(x, Canvas.GetTop(x) - 30);
                         Rect bulletU = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
@@ -495,7 +495,7 @@ namespace TowerDefGame
                         }
                         break;
                     case "bulletD":
-                        Canvas.SetTop(x, Canvas.GetTop(x) + 20);
+                        Canvas.SetTop(x, Canvas.GetTop(x) + 30);
                         Rect bulletD = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
@@ -514,8 +514,8 @@ namespace TowerDefGame
                         }
                         break;
                     case "bulletUL":
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 20);
-                        Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 30);
+                        Canvas.SetTop(x, Canvas.GetTop(x) - 30);
                         Rect bulletUL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
@@ -534,8 +534,8 @@ namespace TowerDefGame
                         }
                         break;
                     case "bulletUR":
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 20);
-                        Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 30);
+                        Canvas.SetTop(x, Canvas.GetTop(x) - 30);
                         Rect bulletUR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
@@ -554,8 +554,8 @@ namespace TowerDefGame
                         }
                         break;
                     case "bulletDL":
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 20);
-                        Canvas.SetTop(x, Canvas.GetTop(x) + 20);
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 30);
+                        Canvas.SetTop(x, Canvas.GetTop(x) + 30);
                         Rect bulletDL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
@@ -574,8 +574,8 @@ namespace TowerDefGame
                         }
                         break;
                     case "bulletDR":
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 20);
-                        Canvas.SetTop(x, Canvas.GetTop(x) + 20);
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 30);
+                        Canvas.SetTop(x, Canvas.GetTop(x) + 30);
                         Rect bulletDR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
@@ -605,7 +605,7 @@ namespace TowerDefGame
                         {
 
                             case "tower1":
-                                Rect range1 = new Rect(Canvas.GetLeft(x) + 25, Canvas.GetTop(x) + 25, 300, 300);
+                                Rect range1 = new Rect(Canvas.GetLeft(x) + 25, Canvas.GetTop(x) + 25, 150, 150);
                                 foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                                 {
                                     if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
@@ -617,7 +617,7 @@ namespace TowerDefGame
                                             double dify = Canvas.GetTop(x) + 50 - Canvas.GetTop(y);
                                             if (difx > 0 && dify > 0) //Top Left
                                             {
-                                                if (difx > 75 && dify > 75)
+                                                if (difx > 38 && dify > 38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -630,9 +630,10 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x) - x.Width);
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
-                                                else if (dify < 75)
+                                                else if (dify < 38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -645,9 +646,10 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x) - x.Width);
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x));
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
-                                                else if (difx < 75)
+                                                else if (difx < 38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -660,12 +662,13 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x));
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
                                             }
                                             else if (difx < 0 && dify > 0) //Top Right
                                             {
-                                                if (difx < -75 && dify > 75)
+                                                if (difx < -38 && dify > 38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -678,9 +681,10 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x) + x.Width);
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
-                                                else if (dify < 75)
+                                                else if (dify < 38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -693,9 +697,10 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x) + x.Width);
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x));
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
-                                                else if (difx > -75)
+                                                else if (difx > -38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -708,12 +713,13 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x));
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
                                             }
                                             else if (difx < 0 && dify < 0) //Bottom Right
                                             {
-                                                if (difx < -75 && dify < -75)
+                                                if (difx < -38 && dify < -38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -726,9 +732,10 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x) + x.Width);
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x) + x.Height);
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
-                                                else if (dify > -75)
+                                                else if (dify > -38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -741,9 +748,10 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x) + x.Width);
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x));
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
-                                                else if (difx > -75)
+                                                else if (difx > -38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -756,12 +764,13 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x));
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x) + x.Height);
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
                                             }
                                             else if (difx > 0 && dify < 0) //Bottom Left
                                             {
-                                                if (difx > 75 && dify < -75)
+                                                if (difx > 38 && dify < -38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -774,9 +783,10 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x) - x.Width);
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
-                                                else if (dify > -75)
+                                                else if (dify > -38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -789,9 +799,10 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x) - x.Width);
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x));
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
-                                                else if (difx < 75)
+                                                else if (difx < 38)
                                                 {
                                                     Rectangle bullet = new Rectangle
                                                     {
@@ -804,6 +815,7 @@ namespace TowerDefGame
                                                     Canvas.SetLeft(bullet, Canvas.GetLeft(x));
                                                     Canvas.SetTop(bullet, Canvas.GetTop(x) + x.Height);
                                                     gameCanvas.Children.Add(bullet);
+                                                    x.Tag = "tower1Cool";
                                                     break;
                                                 }
                                             }
@@ -820,6 +832,13 @@ namespace TowerDefGame
                 {
                 }
             }
+            foreach (var x in gameCanvas.Children.OfType<Rectangle>())
+            {
+                if ((string)x.Tag == "tower1Cool")
+                {
+                    x.Tag = "tower1";
+                }
+            }
             isCool = true;
             //GC.Collect();
 
@@ -827,7 +846,7 @@ namespace TowerDefGame
         
         private void cooldowm()
         {
-            if (cooldownCount == 10)
+            if (cooldownCount == 20)
             {
                 isCool = false;
                 cooldownCount = 0;
