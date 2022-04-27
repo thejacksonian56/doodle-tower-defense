@@ -47,6 +47,7 @@ namespace TowerDefGame
         public int temple;
         public bool isBuying = false;
         public int buyingTypeOf;
+        public int numTowers;
 
         public int mousex;
         public int mousey;
@@ -55,6 +56,8 @@ namespace TowerDefGame
 
         int enemysLeft;
         public int timerCount = 10;
+        public int cooldownCount = 0;
+        public bool isCool = false;
 
         public MainWindow()
         {
@@ -221,6 +224,7 @@ namespace TowerDefGame
             isBuying = true;
             buyingTypeOf = 1;
             test.Fill = Brushes.Red;
+            numTowers++;
         }
 
         private void gameCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -238,6 +242,7 @@ namespace TowerDefGame
             isBuying = true;
             buyingTypeOf = 2;
             test.Fill = Brushes.Red;
+            numTowers++;
         }
 
         private void tower3Buy_Click(object sender, RoutedEventArgs e)
@@ -245,6 +250,7 @@ namespace TowerDefGame
             isBuying = true;
             buyingTypeOf = 3;
             test.Fill = Brushes.Red;
+            numTowers++;
         }
 
         private void tower4Buy_Click(object sender, RoutedEventArgs e)
@@ -252,6 +258,7 @@ namespace TowerDefGame
             isBuying = true;
             buyingTypeOf = 4;
             test.Fill = Brushes.Red;
+            numTowers++;
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
@@ -263,146 +270,324 @@ namespace TowerDefGame
         }
         private void gameEngine(object sender, EventArgs e)
         {
+            cooldowm();
             makeEnemys();
             timerCount++;
+            try
+            {
+                foreach (var x in gameCanvas.Children.OfType<Rectangle>())
+                {
+                    try
+                    {
+                        switch (x.Tag)
+                        {
+
+                            case "enemyDown":
+                                Canvas.SetTop(x, Canvas.GetTop(x) + 10);
+                                Rect enemyD = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                                foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                                {
+                                    if ((string)y.Tag == "turnR")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyD.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyRight";
+                                        }
+                                    }
+                                    else if ((string)y.Tag == "turnL")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyD.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyLeft";
+                                        }
+                                    }
+                                    else if ((string)y.Tag == "turnU")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyD.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyUp";
+                                        }
+                                    }
+                                }
+                                break;
+
+                            case "enemyUp":
+                                Canvas.SetTop(x, Canvas.GetTop(x) - 10);
+                                Rect enemyU = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                                foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                                {
+                                    if ((string)y.Tag == "turnR")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyU.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyRight";
+                                        }
+                                    }
+                                    else if ((string)y.Tag == "turnL")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyU.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyLeft";
+                                        }
+                                    }
+                                    else if ((string)y.Tag == "turnD")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyU.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyDown";
+                                        }
+                                    }
+                                }
+                                break;
+
+                            case "enemyLeft":
+                                Canvas.SetLeft(x, Canvas.GetLeft(x) - 10);
+                                Rect enemyL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                                foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                                {
+                                    if ((string)y.Tag == "turnR")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyL.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyRight";
+                                        }
+                                    }
+                                    else if ((string)y.Tag == "turnD")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyL.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyDown";
+                                        }
+                                    }
+                                    else if ((string)y.Tag == "turnU")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyL.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyUp";
+                                        }
+                                    }
+                                }
+                                break;
+
+                            case "enemyRight":
+                                Canvas.SetLeft(x, Canvas.GetLeft(x) + 10);
+                                Rect enemyR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                                foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                                {
+                                    if ((string)y.Tag == "turnD")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyR.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyDown";
+                                        }
+                                    }
+                                    else if ((string)y.Tag == "turnL")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyR.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyLeft";
+                                        }
+                                    }
+                                    else if ((string)y.Tag == "turnU")
+                                    {
+                                        Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyR.IntersectsWith(turn))
+                                        {
+                                            x.Tag = "enemyUp";
+                                        }
+                                    }
+
+                                    else if ((string)y.Tag == "temple")
+                                    {
+                                        Rect templeRect = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                        if (enemyR.IntersectsWith(templeRect))
+                                        {
+                                            gameCanvas.Children.Remove(x);
+                                            health--;
+                                            healthText.Text = "Health: " + health;
+                                            break;
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
             foreach (var x in gameCanvas.Children.OfType<Rectangle>())
             {
                 switch (x.Tag)
                 {
-                    case "enemyDown":
-                        Canvas.SetTop(x, Canvas.GetTop(x) + 10);
-                        Rect enemyD = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                    case "bulletL":
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 20);
+                        Rect bulletL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                         foreach (var y in gameCanvas.Children.OfType<Rectangle>())
                         {
-                            if ((string)y.Tag == "turnR")
+                            if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
                             {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if(enemyD.IntersectsWith(turn))
+                                Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (bulletL.IntersectsWith(enemy))
                                 {
-                                    x.Tag = "enemyRight";
-                                }
-                            }
-                            else if ((string)y.Tag == "turnL")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyD.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyLeft";
-                                }
-                            }
-                            else if ((string)y.Tag == "turnU")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyD.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyUp";
-                                }
-                            }
-                        }
-                        break;
-
-                    case "enemyUp":
-                        Canvas.SetTop(x, Canvas.GetTop(x) - 10);
-                        Rect enemyU = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
-                        {
-                            if ((string)y.Tag == "turnR")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyU.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyRight";
-                                }
-                            }
-                            else if ((string)y.Tag == "turnL")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyU.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyLeft";
-                                }
-                            }
-                            else if ((string)y.Tag == "turnD")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyU.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyDown";
-                                }
-                            }
-                        }
-                        break;
-
-                    case "enemyLeft":
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 10);
-                        Rect enemyL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
-                        {
-                            if ((string)y.Tag == "turnR")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyL.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyRight";
-                                }
-                            }
-                            else if ((string)y.Tag == "turnD")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyL.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyDown";
-                                }
-                            }
-                            else if ((string)y.Tag == "turnU")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyL.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyUp";
-                                }
-                            }
-                        }
-                        break;
-
-                    case "enemyRight":
-                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 10);
-                        Rect enemyR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
-                        {
-                            if ((string)y.Tag == "turnD")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyR.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyDown";
-                                }
-                            }
-                            else if ((string)y.Tag == "turnL")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyR.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyLeft";
-                                }
-                            }
-                            else if ((string)y.Tag == "turnU")
-                            {
-                                Rect turn = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyR.IntersectsWith(turn))
-                                {
-                                    x.Tag = "enemyUp";
-                                }
-                            }
-
-                            else if ((string)y.Tag == "temple")
-                            {
-                                Rect templeRect = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                                if (enemyR.IntersectsWith(templeRect))
-                                {
+                                    gameCanvas.Children.Remove(y);
                                     gameCanvas.Children.Remove(x);
-                                    health--;
-                                    healthText.Text = "Health: " + health;
+                                    balance = balance + 10;
+                                    ballanceText.Text = "Ballance: " + balance;
+                                    return;
+                                }
+                            }
+                        }
+                        break;
+                    case "bulletR":
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 20);
+                        Rect bulletR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
+                            {
+                                Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (bulletR.IntersectsWith(enemy))
+                                {
+                                    gameCanvas.Children.Remove(y);
+                                    gameCanvas.Children.Remove(x);
+                                    balance = balance + 10;
+                                    ballanceText.Text = "Ballance: " + balance;
+                                    return;
+                                }
+                            }
+                        }
+                        break;
+                    case "bulletU":
+                        Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+                        Rect bulletU = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
+                            {
+                                Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (bulletU.IntersectsWith(enemy))
+                                {
+                                    gameCanvas.Children.Remove(y);
+                                    gameCanvas.Children.Remove(x);
+                                    balance = balance + 10;
+                                    ballanceText.Text = "Ballance: " + balance;
+                                    return;
+                                }
+                            }
+                        }
+                        break;
+                    case "bulletD":
+                        Canvas.SetTop(x, Canvas.GetTop(x) + 20);
+                        Rect bulletD = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
+                            {
+                                Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (bulletD.IntersectsWith(enemy))
+                                {
+                                    gameCanvas.Children.Remove(y);
+                                    gameCanvas.Children.Remove(x);
+                                    balance = balance + 10;
+                                    ballanceText.Text = "Ballance: " + balance;
+                                    return;
+                                }
+                            }
+                        }
+                        break;
+                    case "bulletUL":
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 20);
+                        Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+                        Rect bulletUL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
+                            {
+                                Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (bulletUL.IntersectsWith(enemy))
+                                {
+                                    gameCanvas.Children.Remove(y);
+                                    gameCanvas.Children.Remove(x);
+                                    balance = balance + 10;
+                                    ballanceText.Text = "Ballance: " + balance;
+                                    return;
+                                }
+                            }
+                        }
+                        break;
+                    case "bulletUR":
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 20);
+                        Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+                        Rect bulletUR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
+                            {
+                                Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (bulletUR.IntersectsWith(enemy))
+                                {
+                                    gameCanvas.Children.Remove(y);
+                                    gameCanvas.Children.Remove(x);
+                                    balance = balance + 10;
+                                    ballanceText.Text = "Ballance: " + balance;
+                                    return;
+                                }
+                            }
+                        }
+                        break;
+                    case "bulletDL":
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) - 20);
+                        Canvas.SetTop(x, Canvas.GetTop(x) + 20);
+                        Rect bulletDL = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
+                            {
+                                Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (bulletDL.IntersectsWith(enemy))
+                                {
+                                    gameCanvas.Children.Remove(y);
+                                    gameCanvas.Children.Remove(x);
+                                    balance = balance + 10;
+                                    ballanceText.Text = "Ballance: " + balance;
+                                    return;
+                                }
+                            }
+                        }
+                        break;
+                    case "bulletDR":
+                        Canvas.SetLeft(x, Canvas.GetLeft(x) + 20);
+                        Canvas.SetTop(x, Canvas.GetTop(x) + 20);
+                        Rect bulletDR = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                        {
+                            if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
+                            {
+                                Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                                if (bulletDR.IntersectsWith(enemy))
+                                {
+                                    gameCanvas.Children.Remove(y);
+                                    gameCanvas.Children.Remove(x);
+                                    balance = balance + 10;
+                                    ballanceText.Text = "Ballance: " + balance;
                                     return;
                                 }
                             }
@@ -410,10 +595,246 @@ namespace TowerDefGame
                         break;
                 }
             }
+            for (int i = 0; i < numTowers; i++)
+            {
+                try
+                {
+                    foreach (var x in gameCanvas.Children.OfType<Rectangle>())
+                    {
+                        switch (x.Tag)
+                        {
+
+                            case "tower1":
+                                Rect range1 = new Rect(Canvas.GetLeft(x) + 25, Canvas.GetTop(x) + 25, 300, 300);
+                                foreach (var y in gameCanvas.Children.OfType<Rectangle>())
+                                {
+                                    if ((string)y.Tag == "enemyLeft" || (string)y.Tag == "enemyRight" || (string)y.Tag == "enemyDown" || (string)y.Tag == "enemyUp")
+                                    {
+                                        Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, Height);
+                                        if (enemy.IntersectsWith(range1) && isCool == false)
+                                        {
+                                            double difx = Canvas.GetLeft(x) + 50 - Canvas.GetLeft(y);
+                                            double dify = Canvas.GetTop(x) + 50 - Canvas.GetTop(y);
+                                            if (difx > 0 && dify > 0) //Top Left
+                                            {
+                                                if (difx > 75 && dify > 75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletUL",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x) - x.Width);
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                                else if (dify < 75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletL",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x) - x.Width);
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x));
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                                else if (difx < 75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletU",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x));
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                            }
+                                            else if (difx < 0 && dify > 0) //Top Right
+                                            {
+                                                if (difx < -75 && dify > 75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletUR",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x) + x.Width);
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                                else if (dify < 75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletR",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x) + x.Width);
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x));
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                                else if (difx > -75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletU",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x));
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                            }
+                                            else if (difx < 0 && dify < 0) //Bottom Right
+                                            {
+                                                if (difx < -75 && dify < -75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletDR",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x) + x.Width);
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x) + x.Height);
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                                else if (dify > -75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletR",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x) + x.Width);
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x));
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                                else if (difx > -75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletD",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x));
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x) + x.Height);
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                            }
+                                            else if (difx > 0 && dify < 0) //Bottom Left
+                                            {
+                                                if (difx > 75 && dify < -75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletDL",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x) - x.Width);
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x) - x.Height);
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                                else if (dify > -75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletL",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x) - x.Width);
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x));
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                                else if (difx < 75)
+                                                {
+                                                    Rectangle bullet = new Rectangle
+                                                    {
+                                                        Width = 5,
+                                                        Height = 5,
+                                                        Tag = "bulletD",
+                                                        Fill = new SolidColorBrush(Colors.Black)
+                                                    };
+                                                    Canvas.SetZIndex(bullet, 2);
+                                                    Canvas.SetLeft(bullet, Canvas.GetLeft(x));
+                                                    Canvas.SetTop(bullet, Canvas.GetTop(x) + x.Height);
+                                                    gameCanvas.Children.Add(bullet);
+                                                    break;
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+            isCool = true;
             //GC.Collect();
-            
+
         }
         
+        private void cooldowm()
+        {
+            if (cooldownCount == 10)
+            {
+                isCool = false;
+                cooldownCount = 0;
+            }
+            cooldownCount++;
+        }
+
         private void makeEnemys()
         {
             if (enemysLeft > 0 && timerCount == 10)
